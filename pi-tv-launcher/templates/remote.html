@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pi Zero TV Remote</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="remote-body">
+  <main class="remote-shell">
+    <header class="remote-header">
+      <div>
+        <p class="eyebrow">Remote</p>
+        <h1>Pi Zero TV</h1>
+      </div>
+      <button id="statusRefresh" class="small-button" type="button">Status</button>
+    </header>
+
+    {% if pin_enabled %}
+    <label class="field">
+      <span>PIN</span>
+      <input id="pinInput" inputmode="numeric" autocomplete="one-time-code" type="password">
+    </label>
+    {% endif %}
+
+    <section class="quick-grid" aria-label="Shortcuts">
+      <button data-cmd="home">Home</button>
+      {% for app in apps %}
+      <button data-cmd="{{ app.id }}">{{ app.label }}</button>
+      {% endfor %}
+      <button data-cmd="refresh">Refresh</button>
+    </section>
+
+    <section class="dpad" aria-label="Navigation controls">
+      <span></span>
+      <button data-cmd="nav_up">Up</button>
+      <span></span>
+      <button data-cmd="nav_left">Left</button>
+      <button data-cmd="select" class="select-button">OK</button>
+      <button data-cmd="nav_right">Right</button>
+      <span></span>
+      <button data-cmd="nav_down">Down</button>
+      <span></span>
+    </section>
+
+    <section class="remote-grid" aria-label="Browser controls">
+      <button data-cmd="back">Back</button>
+      <button data-cmd="forward">Forward</button>
+      <button data-cmd="tab">Tab</button>
+      <button data-cmd="shift_tab">Shift Tab</button>
+      <button data-cmd="page_up">Page Up</button>
+      <button data-cmd="page_down">Page Down</button>
+      <button data-cmd="escape">Escape</button>
+      <button data-cmd="click">Click</button>
+    </section>
+
+    <section class="remote-grid" aria-label="Mouse controls">
+      <button data-cmd="mouse_up">Mouse Up</button>
+      <button data-cmd="mouse_down">Mouse Down</button>
+      <button data-cmd="mouse_left">Mouse Left</button>
+      <button data-cmd="mouse_right">Mouse Right</button>
+    </section>
+
+    <section class="remote-grid" aria-label="System controls">
+      <button data-cmd="volume_up">Volume Up</button>
+      <button data-cmd="volume_down">Volume Down</button>
+      <button data-cmd="mute">Mute</button>
+      <button data-cmd="close_browser">Close Browser</button>
+      <button data-cmd="reboot" class="danger">Reboot Pi</button>
+    </section>
+
+    <section class="panel">
+      <label class="field">
+        <span>Text</span>
+        <input id="textInput" type="text" autocomplete="off" placeholder="Type on TV">
+      </label>
+      <button id="sendText" type="button">Send Text</button>
+    </section>
+
+    <section class="panel">
+      <label class="field">
+        <span>Open URL</span>
+        <input id="urlInput" type="url" inputmode="url" placeholder="https://example.com">
+      </label>
+      <button id="openUrl" type="button">Open URL</button>
+    </section>
+
+    <section class="status-box" aria-live="polite">
+      <h2>Status</h2>
+      <p id="statusText">Loading...</p>
+      <p id="messageText" class="message"></p>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='remote.js') }}"></script>
+</body>
+</html>

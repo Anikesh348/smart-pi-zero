@@ -1,0 +1,22 @@
+services:
+  pi-tv-launcher:
+    build:
+      context: .
+      args:
+        INSTALL_BROWSER: "1"
+    image: pi-tv-launcher:latest
+    container_name: pi-tv-launcher
+    network_mode: host
+    environment:
+      PORT: "8080"
+      DISPLAY: ${DISPLAY:-:0}
+      XAUTHORITY: ${XAUTHORITY:-/home/pi/.Xauthority}
+      PI_TV_CONFIG: /config/config.json
+      PI_TV_DRY_RUN: "false"
+    volumes:
+      - ./config.json:/config/config.json:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ${XAUTHORITY:-/home/pi/.Xauthority}:${XAUTHORITY:-/home/pi/.Xauthority}:ro
+    devices:
+      - /dev/snd:/dev/snd
+    restart: unless-stopped

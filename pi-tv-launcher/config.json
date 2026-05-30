@@ -1,0 +1,30 @@
+{
+  "port": 8080,
+  "pin": "",
+  "dry_run": "auto",
+  "browser_command": "surf",
+  "browser_args": ["-F"],
+  "browser_process_names": ["surf", "cog", "chromium", "chromium-browser", "firefox-esr"],
+  "default_browser_url": "https://lite.duckduckgo.com/lite/",
+  "launcher_url": "http://localhost:8080/tv",
+  "apps": [
+    {
+      "id": "youtube",
+      "label": "YouTube",
+      "url": "https://www.youtube.com/tv",
+      "theme": "red"
+    },
+    {
+      "id": "moviehub",
+      "label": "Moviehub",
+      "url": "https://openmovies.hostingfrompurva.xyz",
+      "theme": "violet"
+    },
+    {
+      "id": "browser",
+      "label": "Browser",
+      "url": "https://lite.duckduckgo.com/lite/",
+      "theme": "blue"
+    }
+  ]
+}

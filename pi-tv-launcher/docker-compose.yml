@@ -1,0 +1,17 @@
+services:
+  pi-tv-launcher:
+    build:
+      context: .
+      args:
+        INSTALL_BROWSER: "1"
+    image: pi-tv-launcher:latest
+    container_name: pi-tv-launcher
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      PI_TV_CONFIG: /config/config.json
+      PI_TV_DRY_RUN: ${PI_TV_DRY_RUN:-auto}
+    volumes:
+      - ./config.json:/config/config.json:ro
+    restart: unless-stopped

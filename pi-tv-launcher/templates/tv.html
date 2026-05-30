@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pi Zero TV</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="tv-body">
+  <main class="tv-shell">
+    <header class="tv-header">
+      <div>
+        <p class="eyebrow">Lightweight TV launcher</p>
+        <h1>Pi Zero TV</h1>
+        <p id="tvStatus" class="tv-status">Ready</p>
+      </div>
+      <time id="clock" class="clock">--:--</time>
+    </header>
+
+    <section class="hero-strip" aria-label="Primary shortcuts">
+      {% for app in apps %}
+      <button class="tile tile-{{ app.theme }}" data-cmd="{{ app.id }}">
+        <span>{{ app.label }}</span>
+      </button>
+      {% endfor %}
+      <button class="tile tile-slate" data-cmd="refresh">
+        <span>Refresh</span>
+      </button>
+    </section>
+
+    <section class="system-strip" aria-label="System actions">
+      <button data-cmd="home">Home</button>
+      <button data-cmd="back">Back</button>
+      <button data-cmd="select">Select</button>
+      <button data-cmd="volume_down">Vol -</button>
+      <button data-cmd="volume_up">Vol +</button>
+      <button data-cmd="mute">Mute</button>
+    </section>
+  </main>
+
+  <script>
+    function updateClock() {
+      document.getElementById("clock").textContent = new Intl.DateTimeFormat([], {
+        hour: "2-digit",
+        minute: "2-digit"
+      }).format(new Date());
+    }
+
+    function sendCommand(cmd) {
+      fetch("/api/cmd", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({cmd})
+      }).finally(updateStatus);
+    }
+
+    async function updateStatus() {
+      try {
+        const response = await fetch("/api/status");
+        const data = await response.json();
+        const event = data.last_event || {};
+        const command = event.command ? event.command.replaceAll("_", " ") : "Ready";
+        const mode = data.dry_run ? "Dry run. " : "";
+        const suffix = event.error ? ` (${event.error})` : "";
+        document.getElementById("tvStatus").textContent = event.command
+          ? `${mode}Last command: ${command}${suffix}`
+          : `${mode}Ready`;
+      } catch (error) {
+        document.getElementById("tvStatus").textContent = "Status unavailable";
+      }
+    }
+
+    document.querySelectorAll("[data-cmd]").forEach((button) => {
+      button.addEventListener("click", () => sendCommand(button.dataset.cmd));
+    });
+
+    updateClock();
+    updateStatus();
+    setInterval(updateClock, 15000);
+    setInterval(updateStatus, 2000);
+  </script>
+</body>
+</html>
