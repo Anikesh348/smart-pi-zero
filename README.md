@@ -66,6 +66,7 @@ or, as a fallback:
 ```json
 "browser_command": "chromium",
 "browser_args": [
+  "--no-memcheck",
   "--kiosk",
   "--no-first-run",
   "--disable-dev-shm-usage",
@@ -76,6 +77,8 @@ or, as a fallback:
   "--media-cache-size=16777216"
 ]
 ```
+
+On a Pi Zero 2W, `--no-memcheck` is important. Debian's Chromium wrapper otherwise shows a low-memory warning prompt before Chromium reaches kiosk mode.
 
 The launcher itself is light. The opened websites decide how heavy the experience becomes.
 
