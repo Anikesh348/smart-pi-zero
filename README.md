@@ -218,6 +218,14 @@ Start X manually:
 startx
 ```
 
+If UxPlay or another DRM client blocks Xorg with `drmSetMaster failed`, use the included framebuffer config:
+
+```sh
+startx -- -config "$HOME/smart-pi-zero/xorg-fbdev.conf"
+```
+
+On the deployed Pi Zero, tty1 autologin can stop UxPlay before starting X and then use this framebuffer config so the TV launcher can coexist with an enabled `uxplay.service`.
+
 ## Auto-login On tty1
 
 Create a getty override:
