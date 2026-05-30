@@ -6,11 +6,11 @@ Wants=network-online.target
 [Service]
 Type=simple
 User=pi
-WorkingDirectory=/home/pi/pi-tv-launcher
-Environment=PATH=/home/pi/pi-tv-launcher/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+WorkingDirectory=/home/pi/smart-pi-zero
+Environment=PATH=/home/pi/smart-pi-zero/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 Environment=DISPLAY=:0
 Environment=XAUTHORITY=/home/pi/.Xauthority
-ExecStart=/home/pi/pi-tv-launcher/.venv/bin/python /home/pi/pi-tv-launcher/app.py
+ExecStart=/home/pi/smart-pi-zero/.venv/bin/python /home/pi/smart-pi-zero/app.py
 Restart=on-failure
 RestartSec=3
 

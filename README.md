@@ -84,7 +84,7 @@ The launcher itself is light. The opened websites decide how heavy the experienc
 Mac/headless runs use dry-run mode automatically, so buttons update app state but do not launch a real browser.
 
 ```sh
-cd /Users/anikeshthakur/Documents/smart-pi-zero/pi-tv-launcher
+cd /Users/anikeshthakur/Documents/smart-pi-zero
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
@@ -124,7 +124,7 @@ The default compose file builds a self-contained image with Flask, `xdotool`, `a
 For real browser control from Docker on the Pi, the container needs access to the X server and audio device. Use the Pi compose file:
 
 ```sh
-cd /home/pi/pi-tv-launcher
+cd /home/pi/smart-pi-zero
 export DISPLAY=:0
 export XAUTHORITY=/home/pi/.Xauthority
 docker compose -f docker-compose.pi.yml up -d --build
@@ -166,7 +166,7 @@ sudo apt install -y cog
 Install the app:
 
 ```sh
-cd /home/pi/pi-tv-launcher
+cd /home/pi/smart-pi-zero
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
@@ -203,7 +203,7 @@ Create `/home/pi/.xinitrc`:
 
 ```sh
 #!/bin/sh
-BROWSER_COMMAND=surf BROWSER_ARGS="-F" /home/pi/pi-tv-launcher/scripts/start-kiosk.sh
+BROWSER_COMMAND=surf BROWSER_ARGS="-F" /home/pi/smart-pi-zero/scripts/start-kiosk.sh
 ```
 
 Make it executable:
