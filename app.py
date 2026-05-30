@@ -312,11 +312,11 @@ def perform_command(command: str, payload: dict[str, Any]) -> dict[str, Any]:
     return action()
 
 
-def process_running(pattern: str) -> bool:
+def process_running(process_name: str) -> bool:
     if dry_run_enabled():
         return False
 
-    result = run_best_effort(["pgrep", "-f", pattern], timeout=3)
+    result = run_best_effort(["pgrep", "-x", process_name], timeout=3)
     return bool(result.get("ok") and result.get("stdout"))
 
 
