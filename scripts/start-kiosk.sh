@@ -12,6 +12,7 @@ xset s noblank || true
 
 unclutter -idle 0.5 -root >/dev/null 2>&1 &
 openbox-session >/dev/null 2>&1 &
+OPENBOX_PID=$!
 
 i=0
 while [ "$i" -lt 60 ]; do
@@ -22,4 +23,8 @@ while [ "$i" -lt 60 ]; do
   sleep 1
 done
 
-exec "$BROWSER_COMMAND" $BROWSER_ARGS "$APP_URL"
+"$BROWSER_COMMAND" $BROWSER_ARGS "$APP_URL" &
+BROWSER_PID=$!
+
+trap 'kill "$BROWSER_PID" >/dev/null 2>&1 || true; kill "$OPENBOX_PID" >/dev/null 2>&1 || true' INT TERM EXIT
+wait "$OPENBOX_PID"
